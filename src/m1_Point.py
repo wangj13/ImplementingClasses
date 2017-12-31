@@ -9,17 +9,17 @@ Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
 import math
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_init()
-    run_test_repr()
-    run_test_clone()
-    run_test_move_to()
-    run_test_move_by()
-    run_test_get_number_of_moves_made()
-    run_test_get_distance_from()
-    run_test_get_distance_from_start()
+    #run_test_init()
+    #run_test_repr()
+    #run_test_clone()
+    #run_test_move_to()
+    #run_test_move_by()
+    #run_test_get_number_of_moves_made()
+    #run_test_get_distance_from()
+    #run_test_get_distance_from_start()
     run_test_get_distance_traveled()
-    run_test_closer_to()
-    run_test_halfway_to()
+    #run_test_closer_to()
+    #run_test_halfway_to()
 
 ########################################################################
 # IMPORTANT:
@@ -30,11 +30,88 @@ class Point(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.moves = 0
+        self.startx = x
+        self.starty = y
+        self.distance = 0
+
+    def __repr__(self):
+        return'Point({}, {})'.format(self.x, self.y)
+
+    def clone(self):
+        return Point(self.x, self.y)
+
+    def move_to(self, x, y):
+        x1 = self.x
+        y1 = self.y
+        self.x = x
+        self.y = y
+        d = math.sqrt((y1 - self.y) ** 2 + (x1 - self.x) ** 2)
+        self.distance = self.distance + d
+        self.moves = self.moves + 1
+
+    def move_by(self, dx, dy):
+        x1 = self.x
+        y1 = self.y
+        self.x = self.x + dx
+        self.y = self.y + dy
+        d = math.sqrt((y1 - self.y) ** 2 + (x1 - self.x) ** 2)
+        self.distance = self.distance + d
+        self.moves = self.moves + 1
+
+    def get_number_of_moves_made(self):
+        return self.moves
+
+    def get_distance_from(self, point):
+        d = math.sqrt((point.y-self.y)**2+(point.x-self.x)**2)
+        return d
+
+    def get_distance_from_start(self):
+        d = math.sqrt((self.startx-self.x)**2+(self.starty-self.y)**2)
+        return d
+
+    def get_distance_traveled(self):
+        return self.distance
+
+    def closer_to(self, point2, point3):
+        d1 = math.sqrt((point2.x-self.x)**2+(point2.y-self.y)**2)
+        d2 = math.sqrt((point3.x-self.x)**2+(point3.y-self.y)**2)
+        if d1 > d2:
+            return point3
+        else:
+            return point2
+
+    def halfway_to(self, point2):
+        return Point((self.x+point2.x)/2, (self.y+point2.y)/2)
+
+
+
+# ----------------------------------------------------------------------
+# DONE: 2. With your instructor, READ THE INSTRUCTIONS
+#   in file  m0_INSTRUCTIONS.txt, asking questions as needed.
+#
+#   Then implement a class called   Point   that has NO METHODS yet,
+#   just the lines that start the definition of any class:
+#
+#      class NAME_OF_CLASS(object):
+#          """ Brief description of what objects of the class 'are'."""
+#
+#   Run the program and correct any syntax (notational) errors.
+# ----------------------------------------------------------------------
+
+########################################################################
+# NOTE: For ALL of the methods that you implement, the method is allowed
+# to have additional side effects as needed by it and/or other methods.
+########################################################################
+#class Point(object):
+    """ represents a point in 2 spaces"""
+    """def __init__(self, x, y):
+        self.x = x
+        self.y = y
         self.total_moves = 0
         self.d = 0
         self.sx = x
         self.sy = y
-
 
     def __repr__(self):
         return 'point({}, {})'.format(self.x, self.y)
@@ -74,24 +151,7 @@ class Point(object):
 
     def halfway_to(self, point1):
         return Point((self.x+point1.x)/2, (self.y+point1.y)/2)
-
-# ----------------------------------------------------------------------
-# DONE: 2. With your instructor, READ THE INSTRUCTIONS
-#   in file  m0_INSTRUCTIONS.txt, asking questions as needed.
-#
-#   Then implement a class called   Point   that has NO METHODS yet,
-#   just the lines that start the definition of any class:
-#
-#      class NAME_OF_CLASS(object):
-#          """ Brief description of what objects of the class 'are'."""
-#
-#   Run the program and correct any syntax (notational) errors.
-# ----------------------------------------------------------------------
-
-########################################################################
-# NOTE: For ALL of the methods that you implement, the method is allowed
-# to have additional side effects as needed by it and/or other methods.
-########################################################################
+    """
 
 
 def run_test_init():
